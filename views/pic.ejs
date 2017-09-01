@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>裁剪图片</title>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="/css/jquery.Jcrop.css">
+</head>
+
+<body>
+
+    <img src="<%= imgurl%>" id="target" />
+
+    <div id="preview-pane">
+        <div class="preview-container">
+            <img src="<%= imgurl%>" id="img" class="jcrop-preview" />
+        </div>
+    </div>
+
+    <input type="button" value="剪裁！！" id="btn">
+
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/jquery.Jcrop.js"></script>
+    <script type="text/javascript" src="/js/xiaoguo.js"></script>
+    <script type="text/javascript">
+        $("input").click(function() {
+            var w = parseInt($(".jcrop-holder>div:first").css("width"));
+            var h = parseInt($(".jcrop-holder>div:first").css("height"));
+            var x = parseInt($(".jcrop-holder>div:first").css("left"));
+            var y = parseInt($(".jcrop-holder>div:first").css("top"));
+
+            $.post("/api/cut", {
+                "w": w,
+                "h": h,
+                "x": x,
+                "y": y,
+
+            }, function(result) {
+                if (result.code === 1) {
+                    window.location.href = '/home'
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
